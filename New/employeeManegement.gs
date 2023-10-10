@@ -210,4 +210,42 @@ function populateEmployeeDetailsOLD(value, row, column, focusSection = null) {
     }
 
     Logger.log("Visible named ranges: " + JSON.stringify(visibleNamedRanges));
+function clearEmployeeDetails(empTemplateHeaderCells, selectedEmployeeKey) {
+  Logger.log("Starting clearEmployeeDetails")
+
+  var userProperties = PropertiesService.getUserProperties();
+
+  for (var namedRange in empTemplateHeaderCells) {
+    for (var key in empTemplateHeaderCells[namedRange]) {
+      var cellLocation = empTemplateHeaderCells[namedRange][key];
+      var cell = empSheet.getRange(cellLocation.row, cellLocation.column);
+      cell.setValue("");
+    }
+  }
+
+  var currentSelectedEmployee = JSON.parse(userProperties.getProperty(selectedEmployeeKey));
+  for (var key in currentSelectedEmployee) {
+    currentSelectedEmployee[key] = "";
+  }
+
+  userProperties.setProperty(selectedEmployeeKey, JSON.stringify(currentSelectedEmployee));
+
+  var dropdownCellPos = empSheet.getRange(dropdownCellValue);
+  var dropdownValue = dropdownCellPos.getValue();
+
+  if (dropdownValue != ('<Create New Employee>')) {
+
+    for (var namedRange in empTemplateHeaderCells) {
+      for (var key in empTemplateHeaderCells[namedRange]) {
+        var cellLocation = empTemplateHeaderCells[namedRange][key];
+        var cell = empSheet.getRange(cellLocation.row, cellLocation.column);
+        backgroundColour(cell, empTemplateHeaderCells, currentSelectedEmployee);
+      }
+    }
+  } else {
+    Logger.log('clearEmployeeDetails: No need to set Background Cell Colours');
+  }
+
+  Logger.log("Finishing clearEmployeeDetails")
+}
 
