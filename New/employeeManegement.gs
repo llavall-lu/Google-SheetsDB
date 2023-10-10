@@ -210,3 +210,4 @@ function populateEmployeeDetailsOLD(value, row, column, focusSection = null) {
     }
 
     Logger.log("Visible named ranges: " + JSON.stringify(visibleNamedRanges));
+    var selectedEmployee = {}
