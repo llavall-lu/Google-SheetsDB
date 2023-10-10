@@ -144,6 +144,7 @@ function processEmployeeTemplateDetailsCells() {
 
   Logger.log("Finished processEmployeeTemplateDetailsCells");
 }
+  var selectedEmployee = {}
  function processResponse(response, storeToSelectedEmployee = true) {
       if (response) {
         for (var namedRange in empTemplateHeaderCells) { 
