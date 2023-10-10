@@ -49,7 +49,6 @@ function processFormResponses() {
 
   Logger.log("Finished processFormResponses");
 }
-
 function processFilmDetails() {
 
   Logger.log("Starting processFilmDetails");
