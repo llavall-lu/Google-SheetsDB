@@ -213,6 +213,7 @@ function populateEmployeeDetailsOLD(value, row, column, focusSection = null) {
 
     Logger.log("Visible named ranges: " + JSON.stringify(visibleNamedRanges));
 }
+}
 function clearEmployeeDetails(empTemplateHeaderCells, selectedEmployeeKey) {
   Logger.log("Starting clearEmployeeDetails")
 
@@ -250,5 +251,4 @@ function clearEmployeeDetails(empTemplateHeaderCells, selectedEmployeeKey) {
   }
 
   Logger.log("Finishing clearEmployeeDetails")
-}
 }
