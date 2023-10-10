@@ -69,3 +69,17 @@ function backgroundColour(cell, empTemplateHeaderCells, selectedEmployee) {
   }
 
 }
+
+function checkIfCellIsDropdown(cellValue, row, column) {
+
+  var cell = empSheet.getRange(row, column) var dataValidation = cell.getDataValidation()
+
+  if (dataValidation && dataValidation.getCriteriaType() === SpreadsheetApp.DataValidationCriteria.VALUE_IN_LIST) {
+    var dropdownValues = dataValidation.getCriteriaValues();
+    Logger.log('cellValue: ' + cellValue + ' is a dropdown menu with values: ' + dropdownValues.join(", "));
+    return dropdownValues;
+  } else {
+    return false;
+  }
+
+}
