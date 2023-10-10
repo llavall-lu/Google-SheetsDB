@@ -181,7 +181,7 @@ function processEmployeeTemplateDetailsCells() {
     }
 
     processResponse(matchingResponse);
-    processResponse(filmDetails.find(response = >response.objectName === "Film Details"), false);
+    processResponse(filmDetails.find(response => response.objectName === "Film Details"), false);
 
     for (var namedRange in empTemplateHeaderCells) {
       for (var key in selectedEmployee) {
@@ -196,8 +196,8 @@ function processEmployeeTemplateDetailsCells() {
     userProperties.setProperty('selectedEmployee', JSON.stringify(selectedEmployee));
 
     Logger.log("Finished populateEmployeeDetails: " + value);
-  }
-}
+  
+
 function employeeOnEdit(e) {
 
   Logger.log("Starting employeeOnEdit");
