@@ -6,14 +6,17 @@ function getHeaderNameByCell(row, column, value) {
   var empTemplateHeaderCells = JSON.parse(userProperties.getProperty('empTemplateHeaderCells'));
 
   for (var namedRange in empTemplateHeaderCells) {
-    Logger.log('namedRange = ' + namedRange) for (var header in empTemplateHeaderCells[namedRange]) {
+    Logger.log('namedRange = ' + namedRange) 
+    for (var header in empTemplateHeaderCells[namedRange]) {
 
       if (empTemplateHeaderCells[namedRange][header].row == row && empTemplateHeaderCells[namedRange][header].column == column) {
-        Logger.log('Finishing getHeaderNameByCell and found header ' + header) return header;
+        Logger.log('Finishing getHeaderNameByCell and found header ' + header) 
+        return header;
       }
     }
   }
-  Logger.log('Failed getHeaderNameByCell and returning "null"') return null;
+  Logger.log('Failed getHeaderNameByCell and returning "null"') 
+  return null;
 }
 
 function backgroundColour(cell, empTemplateHeaderCells, selectedEmployee) {
@@ -24,7 +27,7 @@ function backgroundColour(cell, empTemplateHeaderCells, selectedEmployee) {
 
   var foundNamedRangeAndKey;
   for (var namedRange in empTemplateHeaderCells) {
-    var key = Object.keys(empTemplateHeaderCells[namedRange]).find(key = >JSON.stringify(empTemplateHeaderCells[namedRange][key]) === JSON.stringify({
+    var key = Object.keys(empTemplateHeaderCells[namedRange]).find(key => JSON.stringify(empTemplateHeaderCells[namedRange][key]) === JSON.stringify({
       row: cellRow,
       column: cellCol
     }));
@@ -72,7 +75,8 @@ function backgroundColour(cell, empTemplateHeaderCells, selectedEmployee) {
 
 function checkIfCellIsDropdown(cellValue, row, column) {
 
-  var cell = empSheet.getRange(row, column) var dataValidation = cell.getDataValidation()
+  var cell = empSheet.getRange(row, column) 
+  var dataValidation = cell.getDataValidation()
 
   if (dataValidation && dataValidation.getCriteriaType() === SpreadsheetApp.DataValidationCriteria.VALUE_IN_LIST) {
     var dropdownValues = dataValidation.getCriteriaValues();
