@@ -10,7 +10,7 @@ function unhideNamedRange(value, row, column, empNameMatch, dropdownHeader) {
   if (empNameMatch) {
     var unhiddenNamedRanges = [];
     var hiddenNamedRanges = []
-    var hiddenNamedRanges = Object.keys(empTemplateNamedRanges).filter(range = >range !== "mainDetails" && range !== "hoursSection");
+    var hiddenNamedRanges = Object.keys(empTemplateNamedRanges).filter(range => range !== "mainDetails" && range !== "hoursSection");
 
     for (var dropdownTitle in empTemplateDropdownCells) {
 
@@ -26,7 +26,7 @@ function unhideNamedRange(value, row, column, empNameMatch, dropdownHeader) {
           empSheet.showRows(namedRangeInfo.rowStart, namedRangeInfo.rowEnd - namedRangeInfo.rowStart + 1);
           unhiddenNamedRanges.push(dropdownValue)
 
-          hiddenNamedRanges = hiddenNamedRanges.filter(range = >range !== dropdownValue);
+          hiddenNamedRanges = hiddenNamedRanges.filter(range => range !== dropdownValue);
         }
       }
     }
@@ -34,7 +34,9 @@ function unhideNamedRange(value, row, column, empNameMatch, dropdownHeader) {
     userProperties.setProperty('hiddenNamedRanges', JSON.stringify(hiddenNamedRanges));
     userProperties.setProperty('unhiddenNamedRanges', JSON.stringify(unhiddenNamedRanges));
 
-    Logger.log('This is an employee Name Match and the following namedRanges have been unhidden: ' + unhiddenNamedRanges.join(", ")) Logger.log('The following Ranges are hidden: ' + hiddenNamedRanges.join(", ")) Logger.log("Finishing unhideNamedRange");
+    Logger.log('This is an employee Name Match and the following namedRanges have been unhidden: ' + unhiddenNamedRanges.join(", ")) 
+    Logger.log('The following Ranges are hidden: ' + hiddenNamedRanges.join(", ")) 
+    Logger.log("Finishing unhideNamedRange");
     return
   }
 
