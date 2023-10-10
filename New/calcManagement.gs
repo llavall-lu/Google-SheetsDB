@@ -16,24 +16,25 @@ function employeeCalc(e, value, row, column) {
 
     for (var i = 0; i < filteredNamedRanges.length; i++) {
       var namedRange = filteredNamedRanges[i];
-      var range = namedRange.getRange() if (range.getRow() <= row && row <= range.getLastRow() && range.getColumn() <= column && column <= range.getLastColumn()) {
+     var range = namedRange.getRange();
+if (range.getRow() <= row && row <= range.getLastRow() && range.getColumn() <= column && column <= range.getLastColumn()) {
 
-        if (namedRange.getName() === 'WeeklyDailyFee') {
+      if (namedRange.getName() === 'WeeklyDailyFee') {
+    Logger.log('FEECALCULATIONS GO!');
+    feeCalculations(e);
+} else if (namedRange.getName() === 'hoursSection') {
+    Logger.log('WORKINGDATES GO!');
+    workingDates(e);
+} else {
+    Logger.log('NO CALC MATCHES');
+}
 
-          Logger.log('FEECALCULATIONS GO!') feeCalculations(e)
-
-        } else if (namedRange.getName() === 'hoursSection') {
-
-          Logger.log('WORKINGDATES GO!') workingDates(e)
-
-        } else {
-          Logger.log('NO CALC MATCHES')
-        }
       }
     }
 
   } else if (autoDetails === 'OFF') {
-    Logger.log('AutoDetails is OFF') return
+    Logger.log('AutoDetails is OFF') 
+    return
 
   }
 
