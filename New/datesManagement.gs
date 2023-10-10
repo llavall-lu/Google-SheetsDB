@@ -27,14 +27,16 @@ function workingDates(e) {
       if (cellInfo.row === activeCellRow && cellInfo.column === activeCellCol) {
         activeKey = key;
         activeCategory = category;
-        Logger.log('activeCategory = ' + activeCategory + ' and activeKey = ' + activeKey) break;
+        Logger.log('activeCategory = ' + activeCategory + ' and activeKey = ' + activeKey) 
+        break;
       }
     }
     if (activeKey) break; 
   }
 
   if (! ['Start Date', 'End Date', 'Weeks'].includes(activeKey)) {
-    Logger.log('No working Dates selected. Finished workingDates') return;
+    Logger.log('No working Dates selected. Finished workingDates') 
+    return;
   }
 
   var startDateInfo = empTemplateHeaderCells[activeCategory]['Start Date'];
