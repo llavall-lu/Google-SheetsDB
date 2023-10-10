@@ -106,7 +106,6 @@ function populateEmployeeDetails(response, empNameMatch, storeToSelectedEmployee
 
   Logger.log('Finishing populateEmployeeDetails')
 }
-
 function populateEmployeeDetailsOLD(value, row, column, focusSection = null) {
   Logger.log("Starting populateEmployeeDetails: " + value);
 
