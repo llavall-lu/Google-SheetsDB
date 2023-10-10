@@ -12,7 +12,7 @@ function matchSelection(value, row, column) {
   var empTemplateDropdownCells = JSON.parse(userProperties.getProperty('empTemplateDropdownCells'));
   var storedMatchingResponse = JSON.parse(userProperties.getProperty('matchingResponse'));
 
-  var empNameMatchingEntry = empNameDictionary.find(entry = >entry.objectName === value);
+  var empNameMatchingEntry = empNameDictionary.find(entry => entry.objectName === value);
 
   Logger.log('Employee Name Matching Entry = ' + JSON.stringify(empNameMatchingEntry))
 
@@ -35,7 +35,8 @@ function matchSelection(value, row, column) {
 
     userProperties.setProperty('matchingResponse', JSON.stringify(matchingResponse));
 
-    Logger.log('empNameMatch = ' + empNameMatch) Logger.log('matchingResponse = ' + JSON.stringify(matchingResponse))
+    Logger.log('empNameMatch = ' + empNameMatch) 
+    Logger.log('matchingResponse = ' + JSON.stringify(matchingResponse))
 
     Logger.log('empTemplateDropdownCells = ' + JSON.stringify(empTemplateDropdownCells))
 
@@ -48,7 +49,8 @@ function matchSelection(value, row, column) {
 
     Logger.log("No matching entry in the main Employee Name Dropdown found for: " + value);
 
-    var valueNoSpace = value.replace(/\s+/g, '') Logger.log("valueNoSpace: " + valueNoSpace);
+    var valueNoSpace = value.replace(/\s+/g, '') 
+    Logger.log("valueNoSpace: " + valueNoSpace);
 
     var namedRangeMatch = empTemplateNamedRanges[valueNoSpace];
 
@@ -80,7 +82,8 @@ function matchSelection(value, row, column) {
       }
 
     } else {
-      Logger.log('No namedRange matches this row or column. Please refresh the page and start again.') Logger.log("Finishing matchSelection");
+      Logger.log('No namedRange matches this row or column. Please refresh the page and start again.') 
+      Logger.log("Finishing matchSelection");
 
       return;
     }
@@ -90,37 +93,48 @@ function loadingSectionOLD(value, row, column, dropdownHeader) {
 
   Logger.log("Starting loadingSection")
 
-  Logger.log('Loading Section value = ' + value) Logger.log('Loading Section row = ' + row) Logger.log('Loading Section column = ' + column) Logger.log('Loading Section dropdownHeader = ' + dropdownHeader)
+  Logger.log('Loading Section value = ' + value) 
+  Logger.log('Loading Section row = ' + row) 
+  Logger.log('Loading Section column = ' + column) 
+  Logger.log('Loading Section dropdownHeader = ' + dropdownHeader)
 
   var userProperties = PropertiesService.getUserProperties();
   var selectedEmployeeJSON = userProperties.getProperty(selectedEmployeeKey);
   var empTemplateHeaderCells = JSON.parse(userProperties.getProperty('empTemplateHeaderCells'));
   var selectedEmployee = JSON.parse(selectedEmployeeJSON);
-  Logger.log('loadingSection savedSelectedEmployee = ' + JSON.stringify(selectedEmployee)) var namedRangesObject = JSON.parse(userProperties.getProperty('empTemplateNamedRanges'));
+  Logger.log('loadingSection savedSelectedEmployee = ' + JSON.stringify(selectedEmployee)) 
+  var namedRangesObject = JSON.parse(userProperties.getProperty('empTemplateNamedRanges'));
 
-  var valueNoSpace = value.replace(/\s+/g, '') Logger.log('valueNoSpace = ' + valueNoSpace)
+  var valueNoSpace = value.replace(/\s+/g, '') 
+  Logger.log('valueNoSpace = ' + valueNoSpace)
 
   var namedRangeKeys = Object.keys(namedRangesObject);
-  var matchingKey = namedRangeKeys.find(key = >key.replace(/\s+/g, '') === valueNoSpace);
+  var matchingKey = namedRangeKeys.find(key => key.replace(/\s+/g, '') === valueNoSpace);
   var selectedNamedRange = namedRangesObject[matchingKey];
-  Logger.log('loadingSection namedRangesObject = ' + JSON.stringify(namedRangesObject)) Logger.log('loadingSection namedRangeKeys = ' + JSON.stringify(namedRangeKeys)) Logger.log('loadingSection matchingKey = ' + matchingKey) Logger.log('loadingSection selectedNamedRange = ' + JSON.stringify(selectedNamedRange))
+  Logger.log('loadingSection namedRangesObject = ' + JSON.stringify(namedRangesObject)) 
+  Logger.log('loadingSection namedRangeKeys = ' + JSON.stringify(namedRangeKeys)) 
+  Logger.log('loadingSection matchingKey = ' + matchingKey) 
+  Logger.log('loadingSection selectedNamedRange = ' + JSON.stringify(selectedNamedRange))
 
   if (selectedNamedRange) {
     var startRow = selectedNamedRange.rowStart
     var endRow = selectedNamedRange.rowEnd
     var numRows = endRow - startRow + 1
     var targetRange = empSheet.getRange(startRow, endRow, numRows);
-    Logger.log('targetRange = ' + targetRange) targetRange.activate();
+    Logger.log('targetRange = ' + targetRange) 
+    targetRange.activate();
     empSheet.unhideRow(targetRange);
     var row = targetRange.getRow();
     var column = targetRange.getColumn();
   } else {
-    Logger.log('Not in the selectedNameRange') return
+    Logger.log('Not in the selectedNameRange') 
+    return
   }
 
-  Logger.log('Section trying to populate ' + JSON.stringify(value)) populateEmployeeDetails(value, row, column);
+  Logger.log('Section trying to populate ' + JSON.stringify(value)) 
+  populateEmployeeDetails(value, row, column);
 
-  Object.keys(namedRangesObject).forEach(key = >{
+  Object.keys(namedRangesObject).forEach(key => {
     if (key !== matchingKey && key !== 'mainDetails' && key !== 'hoursSection' && key !== 'employeeDetails') {
       let currentRangeObj = namedRangesObject[key];
       let startR = currentRangeObj.rowStart;
