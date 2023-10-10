@@ -51,7 +51,8 @@ function populateEmployeeDetails(response, empNameMatch, storeToSelectedEmployee
 
   if (empNameMatch) {
     var selectedEmployee = {}
-    unhiddenNamedRanges.push("mainDetails", "hoursSection") Logger.log('The following namedRanges are unhidden: ' + unhiddenNamedRanges.join(", "))
+    unhiddenNamedRanges.push("mainDetails", "hoursSection") 
+    Logger.log('The following namedRanges are unhidden: ' + unhiddenNamedRanges.join(", "))
   }
 
   if (response) {
@@ -119,7 +120,7 @@ function populateEmployeeDetailsOLD(value, row, column, focusSection = null) {
   var empTemplateDropdownCells = JSON.parse(userProperties.getProperty('empTemplateDropdownCells'));
   var storedMatchingResponse = JSON.parse(userProperties.getProperty('matchingResponse'));
 
-  var matchingEntry = objectNameDictionary.find(entry = >entry.objectName === value);
+  var matchingEntry = objectNameDictionary.find(entry => entry.objectName === value);
 
   Logger.log('main Dropdown matchingEntry = ' + JSON.stringify(matchingEntry))
 
@@ -158,7 +159,8 @@ function populateEmployeeDetailsOLD(value, row, column, focusSection = null) {
       }
 
     } else {
-      Logger.log('No namedRange matches this row or column. Please refresh the page and start again.') Logger.log("Finishing populateEmployeeDetails");
+      Logger.log('No namedRange matches this row or column. Please refresh the page and start again.') 
+      Logger.log("Finishing populateEmployeeDetails");
 
       return;
     }
@@ -249,4 +251,4 @@ function clearEmployeeDetails(empTemplateHeaderCells, selectedEmployeeKey) {
 
   Logger.log("Finishing clearEmployeeDetails")
 }
-
+}
