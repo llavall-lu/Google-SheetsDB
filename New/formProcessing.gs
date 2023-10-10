@@ -145,3 +145,57 @@ function processEmployeeTemplateDetailsCells() {
 
   Logger.log("Finished processEmployeeTemplateDetailsCells");
 }
+ function processResponse(response, storeToSelectedEmployee = true) {
+      if (response) {
+        for (var namedRange in empTemplateHeaderCells) { 
+
+          if (!visibleNamedRanges.hasOwnProperty(namedRange)) {
+            continue;
+          }
+
+          for (var key in response.response) { 
+
+            if (empTemplateHeaderCells[namedRange].hasOwnProperty(key)) {
+
+              var cellDetails = empTemplateHeaderCells[namedRange][key];
+
+              var cell = empSheet.getRange(cellDetails.row, cellDetails.column);
+
+              if (key.toLowerCase().includes('date') && response.response[key] !== '') {
+
+                var date = new Date(response.response[key]);
+                var formattedDate = Utilities.formatDate(date, "GMT", "dd/MM/yyyy");
+                cell.setValue(formattedDate);
+              } else {
+
+                cell.setValue(response.response[key]);
+              }
+
+              if (storeToSelectedEmployee) {
+                selectedEmployee[key] = response.response[key];
+              }
+            }
+          }
+        }
+      }
+    }
+
+    processResponse(matchingResponse);
+    processResponse(filmDetails.find(response = >response.objectName === "Film Details"), false);
+
+    for (var namedRange in empTemplateHeaderCells) {
+      for (var key in selectedEmployee) {
+        if (empTemplateHeaderCells[namedRange].hasOwnProperty(key)) {
+          var cellDetails = empTemplateHeaderCells[namedRange][key];
+          var cell = empSheet.getRange(cellDetails.row, cellDetails.column);
+          backgroundColour(cell, empTemplateHeaderCells, selectedEmployee);
+        }
+      }
+    }
+
+    userProperties.setProperty('selectedEmployee', JSON.stringify(selectedEmployee));
+
+    Logger.log("Finished populateEmployeeDetails: " + value);
+  }
+}
+
