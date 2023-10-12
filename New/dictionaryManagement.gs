@@ -60,5 +60,3 @@ function createSavingDictionary() {
 
   Logger.log("Finished createSavingDictionary");
 }
-
-
