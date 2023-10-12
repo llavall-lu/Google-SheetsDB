@@ -144,154 +144,157 @@ function processEmployeeTemplateDetailsCells() {
 
   Logger.log("Finished processEmployeeTemplateDetailsCells");
 }
-  var selectedEmployee = {}
- function processResponse(response, storeToSelectedEmployee = true) {
-      if (response) {
-        for (var namedRange in empTemplateHeaderCells) { 
+//   var selectedEmployee = {}
+//  function processResponse(response, storeToSelectedEmployee = true) {
+//       if (response) {
+//         for (var namedRange in empTemplateHeaderCells) { 
 
-          if (!visibleNamedRanges.hasOwnProperty(namedRange)) {
-            continue;
-          }
+//           if (!visibleNamedRanges.hasOwnProperty(namedRange)) {
+//             continue;
+//           }
 
-          for (var key in response.response) { 
+//           for (var key in response.response) { 
 
-            if (empTemplateHeaderCells[namedRange].hasOwnProperty(key)) {
+//             if (empTemplateHeaderCells[namedRange].hasOwnProperty(key)) {
 
-              var cellDetails = empTemplateHeaderCells[namedRange][key];
+//               var cellDetails = empTemplateHeaderCells[namedRange][key];
 
-              var cell = empSheet.getRange(cellDetails.row, cellDetails.column);
+//               var cell = empSheet.getRange(cellDetails.row, cellDetails.column);
 
-              if (key.toLowerCase().includes('date') && response.response[key] !== '') {
+//               if (key.toLowerCase().includes('date') && response.response[key] !== '') {
 
-                var date = new Date(response.response[key]);
-                var formattedDate = Utilities.formatDate(date, "GMT", "dd/MM/yyyy");
-                cell.setValue(formattedDate);
-              } else {
+//                 var date = new Date(response.response[key]);
+//                 var formattedDate = Utilities.formatDate(date, "GMT", "dd/MM/yyyy");
+//                 cell.setValue(formattedDate);
+//               } else {
 
-                cell.setValue(response.response[key]);
-              }
+//                 cell.setValue(response.response[key]);
+//               }
 
-              if (storeToSelectedEmployee) {
-                selectedEmployee[key] = response.response[key];
-              }
-            }
-          }
-        }
-      }
-    }
+//               if (storeToSelectedEmployee) {
+//                 selectedEmployee[key] = response.response[key];
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+// var userProperties = PropertiesService.getUserProperties();
+// var storedMatchingResponse = JSON.parse(userProperties.getProperty('matchingResponse'));
+// processResponse(storedMatchingResponse);
 
-    processResponse(matchingResponse);
-    processResponse(filmDetails.find(response => response.objectName === "Film Details"), false);
+//     processResponse(matchingResponse);
+//     processResponse(filmDetails.find(response => response.objectName === "Film Details"), false);
 
-    for (var namedRange in empTemplateHeaderCells) {
-      for (var key in selectedEmployee) {
-        if (empTemplateHeaderCells[namedRange].hasOwnProperty(key)) {
-          var cellDetails = empTemplateHeaderCells[namedRange][key];
-          var cell = empSheet.getRange(cellDetails.row, cellDetails.column);
-          backgroundColour(cell, empTemplateHeaderCells, selectedEmployee);
-        }
-      }
-    }
+//     for (var namedRange in empTemplateHeaderCells) {
+//       for (var key in selectedEmployee) {
+//         if (empTemplateHeaderCells[namedRange].hasOwnProperty(key)) {
+//           var cellDetails = empTemplateHeaderCells[namedRange][key];
+//           var cell = empSheet.getRange(cellDetails.row, cellDetails.column);
+//           backgroundColour(cell, empTemplateHeaderCells, selectedEmployee);
+//         }
+//       }
+//     }
 
-    userProperties.setProperty('selectedEmployee', JSON.stringify(selectedEmployee));
+//     userProperties.setProperty('selectedEmployee', JSON.stringify(selectedEmployee));
 
-    Logger.log("Finished populateEmployeeDetails: " + value);
+//     Logger.log("Finished populateEmployeeDetails: " + value);
   
 
-function employeeOnEdit(e) {
+// function employeeOnEdit(e) {
 
-  Logger.log("Starting employeeOnEdit");
+//   Logger.log("Starting employeeOnEdit");
 
-  loadingIndicator();
+//   loadingIndicator();
 
-  var range = e.range;
-  var sheet = range.getSheet();
-  //var sheetEndRow = empSheet.getLastRow();
-  //var feeSectionRange = ss.getRangeByName('WeeklyDailyFee');
-  //var hoursSectionRange = ss.getRangeByName('hoursSection')
+//   var range = e.range;
+//   var sheet = range.getSheet();
+//   //var sheetEndRow = empSheet.getLastRow();
+//   //var feeSectionRange = ss.getRangeByName('WeeklyDailyFee');
+//   //var hoursSectionRange = ss.getRangeByName('hoursSection')
 
-  if (sheet.getName() === 'Employee Details') { 
+//   if (sheet.getName() === 'Employee Details') { 
 
-    var row = range.getRow();
-    var column = range.getColumn()
+//     var row = range.getRow();
+//     var column = range.getColumn()
 
-    var value = range.getValue();
-    Logger.log('value = ' + value)
+//     var value = range.getValue();
+//     Logger.log('value = ' + value)
 
-    /** Is it a dropdown menu? */   
-    var hasDropdown = checkIfCellIsDropdown(value, row, column);
-    /** Is it a dropdown menu? YES*/
-    if (hasDropdown) {
+//     /** Is it a dropdown menu? */   
+//     var hasDropdown = checkIfCellIsDropdown(value, row, column);
+//     /** Is it a dropdown menu? YES*/
+//     if (hasDropdown) {
 
-      /**  Is it the main Employee dropdown menu? YES*/
-      if (range.getA1Notation() === dropdownCellValue) {
+//       /**  Is it the main Employee dropdown menu? YES*/
+//       if (range.getA1Notation() === dropdownCellValue) {
 
-        resetEmployeeDetailsLayout()
-        /**  Is the value <CREATE NEW EMPLOYEE>? YES*/
-        if (value === '<Create New Employee>') {
-          Logger.log ('Setting <Create New Employee>')
-          clearEmployeeDetails(empTemplateHeaderCells, selectedEmployeeKey);
-          Logger.log ('Finishing Setting <Create New Employee>')
+//         resetEmployeeDetailsLayout()
+//         /**  Is the value <CREATE NEW EMPLOYEE>? YES*/
+//         if (value === '<Create New Employee>') {
+//           Logger.log ('Setting <Create New Employee>')
+//           clearEmployeeDetails(empTemplateHeaderCells, selectedEmployeeKey);
+//           Logger.log ('Finishing Setting <Create New Employee>')
 
          
-        } else {
-          /**  Is the value <CREATE NEW EMPLOYEE>? NO*/
-          // Populate the employee details if an existing employee is selected
-          Logger.log('value trying to populate ' + JSON.stringify(value))
+//         } else {
+//           /**  Is the value <CREATE NEW EMPLOYEE>? NO*/
+//           // Populate the employee details if an existing employee is selected
+//           Logger.log('value trying to populate ' + JSON.stringify(value))
 
-          var result = matchSelection(value, row, column);
+//           var result = matchSelection(value, row, column);
 
-          Logger.log("employeeOnEdit - empNameMatch: " + result.empNameMatch);
-          unhideNamedRange(value,row,column,result.empNameMatch)
+//           Logger.log("employeeOnEdit - empNameMatch: " + result.empNameMatch);
+//           unhideNamedRange(value,row,column,result.empNameMatch)
           
-        }
-      }else {
-        /**  Is it the main Employee dropdown menu? NO*/ 
-        Logger.log('value trying to populate is in a small dropdown: ' + JSON.stringify(value))
-        var result = matchSelection(value, row, column);
+//         }
+//       }else {
+//         /**  Is it the main Employee dropdown menu? NO*/ 
+//         Logger.log('value trying to populate is in a small dropdown: ' + JSON.stringify(value))
+//         var result = matchSelection(value, row, column);
 
-        Logger.log("employeeOnEdit - empNameMatch: " + result.empNameMatch, result.dropdownHeader);
-        unhideNamedRange(value,row,column,result.empNameMatch,dropdownHeader)
-      }
-    }
+//         Logger.log("employeeOnEdit - empNameMatch: " + result.empNameMatch, result.dropdownHeader);
+//         unhideNamedRange(value,row,column,result.empNameMatch,dropdownHeader)
+//       }
+//     }
 
     
-    // Retrieve and parse the empTemplateHeaderCells dictionary from user properties
-    var userProperties = PropertiesService.getUserProperties();
-    var empTemplateHeaderCellsJSON = userProperties.getProperty('empTemplateHeaderCells');
-    var empTemplateHeaderCells = JSON.parse(empTemplateHeaderCellsJSON);
-    var matchingResponse = JSON.parse(userProperties.getProperty('matchingResponse'));
-    var filmDetails = JSON.parse(userProperties.getProperty('filmDetails'));
+//     // Retrieve and parse the empTemplateHeaderCells dictionary from user properties
+//     var userProperties = PropertiesService.getUserProperties();
+//     var empTemplateHeaderCellsJSON = userProperties.getProperty('empTemplateHeaderCells');
+//     var empTemplateHeaderCells = JSON.parse(empTemplateHeaderCellsJSON);
+//     var matchingResponse = JSON.parse(userProperties.getProperty('matchingResponse'));
+//     var filmDetails = JSON.parse(userProperties.getProperty('filmDetails'));
 
-    populateEmployeeDetails(matchingResponse,result.empNameMatch)
+//     populateEmployeeDetails(matchingResponse,result.empNameMatch)
     
-    if (result.empNameMatch) {
-      populateEmployeeDetails(filmDetails.find(response => response.objectName === "Film Details"), result.empNameMatch, true);
-    }
+//     if (result.empNameMatch) {
+//       populateEmployeeDetails(filmDetails.find(response => response.objectName === "Film Details"), result.empNameMatch, true);
+//     }
 
-    // Check if the selectedEmployee dictionary is complete
-    var selectedEmployeeJSON = userProperties.getProperty(selectedEmployeeKey);
-    var selectedEmployee = JSON.parse(selectedEmployeeJSON);
+//     // Check if the selectedEmployee dictionary is complete
+//     var selectedEmployeeJSON = userProperties.getProperty(selectedEmployeeKey);
+//     var selectedEmployee = JSON.parse(selectedEmployeeJSON);
 
-    Logger.log('selectedEmployee = ' + JSON.stringify(selectedEmployee))
-    //Logger.log('selectedEmployeeKey = ' + JSON.stringify(selectedEmployeeKey))
+//     Logger.log('selectedEmployee = ' + JSON.stringify(selectedEmployee))
+//     //Logger.log('selectedEmployeeKey = ' + JSON.stringify(selectedEmployeeKey))
   
 
-    employeeCalc(e, value, row, column);
+//     employeeCalc(e, value, row, column);
 
 
-    if (selectedEmployee && range.getA1Notation() !== dropdownCellValue) {
-      // Iterate over each cell in the edited range and apply the backgroundColour function
-      range.getValues().forEach((row, i) => {
-        row.forEach((value, j) => {
-          var cell = range.getCell(i + 1, j + 1);
-          backgroundColour( cell, empTemplateHeaderCells, selectedEmployee);
-        });
-      });
-    }
-  }
+//     if (selectedEmployee && range.getA1Notation() !== dropdownCellValue) {
+//       // Iterate over each cell in the edited range and apply the backgroundColour function
+//       range.getValues().forEach((row, i) => {
+//         row.forEach((value, j) => {
+//           var cell = range.getCell(i + 1, j + 1);
+//           backgroundColour( cell, empTemplateHeaderCells, selectedEmployee);
+//         });
+//       });
+//     }
+//   }
 
-  loadingIndicator();
+//   loadingIndicator();
 
-  Logger.log("Finished employeeOnEdit");
-}
+//   Logger.log("Finished employeeOnEdit");
+// }
