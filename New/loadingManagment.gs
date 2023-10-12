@@ -28,7 +28,3 @@ function loadingIndicator() {
     loadingCellPos.setFontColor(blackColour);
   }
 }
-
-
-
-
