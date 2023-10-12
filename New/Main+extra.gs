@@ -112,5 +112,3 @@ function feeSection(feeCodeValue) {
 
   Logger.log("Finished feeSection");
 }
-
-
