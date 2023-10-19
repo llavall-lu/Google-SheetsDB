@@ -1,0 +1,8 @@
+services:
+  web:
+    image: node:18
+    volumes:
+      - ./app:/usr/src/app
+    ports:
+      - "82:8080"
+    command: sh -c "/usr/src/app/startup.sh"
